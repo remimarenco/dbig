@@ -1,0 +1,50 @@
+li {
+    list-style: none; /* pour enlever les puces sur IE7 */
+}
+
+.firstList > li
+{
+    list-style: none;
+    display: inline-block;
+}
+
+#imgPrincipale
+{
+    width: 640px;
+    height: 512px;
+}
+
+img
+{
+    width: 160px;
+    height: 128px;
+}
+
+#divLeft
+{
+    float: left;
+    width: auto;
+}
+
+#divLeftTop
+{
+}
+
+#divLeftTop
+{
+}
+
+#divRight
+{
+    float:  left;
+}
+
+#divRightLeft
+{
+    float: left;
+}
+
+#divRightRight
+{
+    float: left;
+}
