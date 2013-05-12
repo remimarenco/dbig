@@ -1,25 +1,7 @@
 html, body
 {
-    margin: 0;
     padding: 0;
-    height: 100%;
-    width: 100%;
-}
-
-li {
-    /* pour enlever les puces sur IE7 */
-    
-}
-
-.firstList > li
-{
-    list-style: none;
-    display: inline-block;
-    float:left;
-}
-
-#imgPrincipale
-{
+    margin: 0;
     width: 100%;
     height: 100%;
 }
@@ -30,66 +12,76 @@ img
     height: 100%;
 }
 
-#divLeft
+.imgType1
 {
-    float: left;
-    width: 50%;
-    height: 100%;
+    
 }
 
-#divLeftTop
+.imgType2
 {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 70%;
+    width: 25%;
+    height: 33.33333%;
 }
 
-#divLeftDown
+.imgType3
 {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 30%;
+    width: 12.5%;
+    height: 16.66667%;
 }
 
-#divRight
+#divTop
 {
-    float:  left;
-    width: 50%
+    height: 67%;
 }
 
-#divRightLeft
+#divDown
 {
-    float: left;
-    width: 50%;
-}
-
-#divRightRight
-{
-    float: left;
-    width: 50%;
-}
-
-ul
-{
-    height: 100%;
-    width: 100%;
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-    -webkit-padding-start: 0px;
-}
-
-li
-{
-    list-style: none;
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-    -webkit-padding-start: 0px;
-    width: 100%;
     height: 33%;
 }
+
+.divQuart
+{
+    float: left;
+    width: 50%;
+    height: 100%
+}
+
+.divMoitie
+{
+    height: 50%;
+}
+
+@media screen and (max-width: 1025px)
+{
+    .onlyDesktop
+    {
+        display: none;
+    }
+
+    .specialFloat
+    {
+        float: none;
+    }
+
+    .specialTakeAll
+    {
+        width: 100%
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .onlyDesktopAndTablet {
+        display: none;
+    }
+
+    .specialFloatSmall
+    {
+        float: none;
+    }
+
+    .specialTakeAllSmall
+    {
+        width: 100%
+    }
+}
+
