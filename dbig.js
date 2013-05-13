@@ -1,7 +1,8 @@
 $(document).ready(function () {
     jQuery.fn.exists = function () { return this.length > 0; }
 
-    var tableauImages = new Object();
+    var indexImageSuivante = 0;
+    var tableauImages = new Array();
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
@@ -14,13 +15,15 @@ $(document).ready(function () {
     var nbImages = 18;
     for (var i = 1; i <= nbImages; i++) {
         if ($("#div" + i).exists()) {
-            jImg = $(tableauImages[i - 1]);
+            jImg = $(tableauImages[i - 1]).clone();
             jImg.attr("id", "img" + i);
             $("#div" + i).append(jImg);
         }
+        indexImageSuivante = i;
     }
 
     // Une fois les images chargées, on lance le timer
+    intervalPowa = setInterval(function () { randomMovingPowa() }, 2000);
 
     var inMouvement = false;
 
@@ -48,9 +51,6 @@ $(document).ready(function () {
 
         // Et on lance le moveToEffect jusqu'à l'élément cliqué (non compris)
         var i = 2;
-        while ($("#img" + i).exists()) {
-            i++;
-        }
 
         var i = 2;
         var iNext = 0;
@@ -65,6 +65,43 @@ $(document).ready(function () {
             }
             i++;
         }
+    }
+
+    function randomMovingPowa() {
+        if (inMouvement) {
+            return false;
+        }
+        else {
+            inMouvement = true;
+        }
+
+        moveToEffect($("#img1"), $("#img2"));
+
+        // On lance le slide effect
+        slideEffect($('#img1'), $(tableauImages[indexImageSuivante]));
+        
+        if (indexImageSuivante + 1 >= tableauImages.length) {
+            // On recommence à l'index 0
+            indexImageSuivante = 0;
+        }
+        else {
+            indexImageSuivante++;
+        }
+
+        var i = 2;
+        var iNext = 0;
+        while ($("#img" + i).exists() && $("#img" + i).attr("id") != $("#img18").attr("id")) {
+            iNext = i + 1;
+            console.log("On bouge " + $("#img" + i).attr("id") + " vers " + $("#img" + iNext).attr("id"));
+            moveToEffect($("#img" + i), $("#img" + iNext));
+            if (i > 30) // Probleme, on sort
+            {
+                alert("Probleme, on sort");
+                break;
+            }
+            i++;
+        }
+        
 
 
         /*
@@ -145,6 +182,8 @@ $(document).ready(function () {
         $(elementToMoveClone).click(function () {
             movingPowa(this);
         });
+        clearInterval(intervalPowa);
+        intervalPowa = setInterval(function () { randomMovingPowa() }, 2000);
     }
 });
 
