@@ -1,10 +1,32 @@
 $(document).ready(function () {
+    jQuery.fn.exists = function () { return this.length > 0; }
+
+    var tableauImages = new Object();
+
+    // On récupère toutes les images qui sont dans divStockage
+    if ($("#divStockage").exists()) {
+        $("#divStockage").children('img').each(function (index) {
+            tableauImages[index] = this;
+        });
+    }
+
+    // On charge d'abord les images dans les cases
+    var nbImages = 18;
+    for (var i = 1; i <= nbImages; i++) {
+        if ($("#div" + i).exists()) {
+            jImg = $(tableauImages[i - 1]);
+            jImg.attr("id", "img" + i);
+            $("#div" + i).append(jImg);
+        }
+    }
+
+    // Une fois les images chargées, on lance le timer
+
     var inMouvement = false;
 
     $("img").click(function () {
         movingPowa(this);
     });
-    jQuery.fn.exists = function () { return this.length > 0; }
 
     function movingPowa(elementClicked) {
         // Si on a cliqué sur l'image principale, on ne lance pas l'algo
@@ -77,7 +99,7 @@ $(document).ready(function () {
         $(thisClone).css("top", "");
 
         elementToErase.replaceWith($(thisClone));
-        $(thisClone).show("slide", 1000, function(){
+        $(thisClone).show("slide", 1000, function () {
             $(this).removeAttr('style');
         });
     }
