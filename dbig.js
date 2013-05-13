@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    var inMouvement = false;
+
     $("img").click(function () {
         movingPowa(this);
     });
@@ -8,6 +10,13 @@ $(document).ready(function () {
         // Si on a cliqué sur l'image principale, on ne lance pas l'algo
         if ($(elementClicked).attr("id") == "#img1") {
             return false;
+        }
+
+        if (inMouvement) {
+            return false;
+        }
+        else {
+            inMouvement = true;
         }
 
         moveToEffect($("#img1"), $("#img2"));
@@ -24,9 +33,9 @@ $(document).ready(function () {
         var i = 2;
         var iNext = 0;
         while ($("#img" + i).exists() && $("#img" + i).attr("id") != $(elementClicked).attr("id")) {
-            console.log("On bouge " + $("#img" + i).attr("id") + "vers " + $("#img" + i + 1).attr("id"));
             iNext = i + 1;
-            moveToEffect($("#img" + i), $("#img" +iNext));
+            console.log("On bouge " + $("#img" + i).attr("id") + " vers " + $("#img" + iNext).attr("id"));
+            moveToEffect($("#img" + i), $("#img" + iNext));
             if (i > 30) // Probleme, on sort
             {
                 alert("Probleme, on sort");
@@ -68,12 +77,17 @@ $(document).ready(function () {
         $(thisClone).css("top", "");
 
         elementToErase.replaceWith($(thisClone));
-        $(thisClone).show("slide", 1000);
+        $(thisClone).show("slide", 1000, function(){
+            $(this).removeAttr('style');
+        });
     }
 
     function moveToEffect(elementToMove, elementReceiver) {
         // On va créer un element qui part de la position de elementToMove et qui va a la position de elementReceiver
         var elementToMoveClone = elementToMove.clone();
+
+        // addClass, .className.split(' ')[0];
+        // .attr(id, value);
 
         // On lui met une position absolue
         $(elementToMoveClone).css("position", "absolute");
@@ -98,7 +112,11 @@ $(document).ready(function () {
         }, 1000, function () {
             elementToMoveClone.attr("id", elementReceiver.attr("id"));
             elementToMoveClone.css("position", "");
+            elementToMoveClone.removeAttr('style');
             elementReceiver.replaceWith(elementToMoveClone);
+
+            // Si on est sur le dernier élément
+            inMouvement = false;
         });
 
         // On lui remet la fonction movingPowa
