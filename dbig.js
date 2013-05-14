@@ -1,3 +1,7 @@
+/*
+DBIG de Rémi Marenco est mis à disposition selon les termes de la licence Creative Commons Attribution 3.0 non transposé.
+Fondé(e) sur une œuvre à https://github.com/remimarenco/dbig
+*/
 $(document).ready(function () {
     jQuery.fn.exists = function () { return this.length > 0; }
 
