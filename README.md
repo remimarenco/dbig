@@ -1,4 +1,4 @@
 dbig
 ====
 
-Dynamic Image Gallery for a client
+Dynamic Image Gallery originally done for http://www.bkyc-visual.com/
