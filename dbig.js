@@ -3,6 +3,7 @@ $(document).ready(function () {
 
     var indexImageSuivante = 0;
     var tableauImages = new Array();
+    var tempsRandom = 2000;
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
@@ -11,8 +12,9 @@ $(document).ready(function () {
         });
     }
 
-    // On charge d'abord les images dans les cases
-    var nbImages = 18;
+    // On charge d'abord les images dans les cases, en fonction de la taille
+    var nbImages = calculSize();
+
     for (var i = 1; i <= nbImages; i++) {
         if ($("#div" + i).exists()) {
             jImg = $(tableauImages[i - 1]).clone();
@@ -23,11 +25,13 @@ $(document).ready(function () {
     }
 
     // Une fois les images chargées, on lance le timer
-    intervalPowa = setInterval(function () { randomMovingPowa() }, 2000);
+    intervalPowa = setInterval(function () { randomMovingPowa() }, tempsRandom);
 
     var inMouvement = false;
 
     $("img").click(function () {
+        clearInterval(intervalPowa);
+        intervalPowa = setInterval(function () { randomMovingPowa() }, tempsRandom);
         movingPowa(this);
     });
 
@@ -41,6 +45,8 @@ $(document).ready(function () {
             return false;
         }
         else {
+            clearInterval(intervalPowa);
+            intervalPowa = setInterval(function () { randomMovingPowa() }, tempsRandom);
             inMouvement = true;
         }
 
@@ -79,7 +85,7 @@ $(document).ready(function () {
 
         // On lance le slide effect
         slideEffect($('#img1'), $(tableauImages[indexImageSuivante]));
-        
+
         if (indexImageSuivante + 1 >= tableauImages.length) {
             // On recommence à l'index 0
             indexImageSuivante = 0;
@@ -90,7 +96,7 @@ $(document).ready(function () {
 
         var i = 2;
         var iNext = 0;
-        while ($("#img" + i).exists() && $("#img" + i).attr("id") != $("#img18").attr("id")) {
+        while ($("#img" + i).exists() && $("#img" + i).attr("id") != $("#img" + nbImages).attr("id")) {
             iNext = i + 1;
             console.log("On bouge " + $("#img" + i).attr("id") + " vers " + $("#img" + iNext).attr("id"));
             moveToEffect($("#img" + i), $("#img" + iNext));
@@ -101,7 +107,7 @@ $(document).ready(function () {
             }
             i++;
         }
-        
+
 
 
         /*
@@ -182,8 +188,20 @@ $(document).ready(function () {
         $(elementToMoveClone).click(function () {
             movingPowa(this);
         });
-        clearInterval(intervalPowa);
-        intervalPowa = setInterval(function () { randomMovingPowa() }, 2000);
+    }
+
+    function calculSize() {
+        if ($(document).width() >= 1025) {
+            _nbImages = 18;
+        }
+        else if ($(document).width() >= 800) {
+            _nbImages = 12;
+        }
+        else {
+            _nbImages = 6;
+        }
+
+        return _nbImages;
     }
 });
 

@@ -51,7 +51,7 @@ img
     height: 50%;
 }
 
-@media screen and (max-width: 1025px)
+@media screen and (max-width: 1024px)
 {
     .onlyDesktop
     {
@@ -69,6 +69,7 @@ img
     }
 }
 
+/*Taille arbitraire*/
 @media screen and (max-width: 800px) {
     .onlyDesktopAndTablet {
         display: none;
