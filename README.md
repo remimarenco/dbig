@@ -1,4 +1,4 @@
 dbig
 ====
 
-Dynamic Image Gallery originally done for http://www.bkyc-visual.com/
+Dynamic BKYC Image Gallery originally done for http://www.bkyc-visual.com/
