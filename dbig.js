@@ -7,7 +7,8 @@ $(document).ready(function () {
 
     var indexImageSuivante = 0;
     var tableauImages = new Array();
-    var tempsRandom = 2000;
+    var tempsRandom = 5000;
+    var tempsAnimation = 3000;
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
@@ -146,7 +147,7 @@ $(document).ready(function () {
         $(thisClone).css("top", "");
 
         elementToErase.replaceWith($(thisClone));
-        $(thisClone).show("slide", 1000, function () {
+        $(thisClone).show("slide", tempsAnimation, function () {
             $(this).removeAttr('style');
         });
     }
@@ -178,7 +179,7 @@ $(document).ready(function () {
             'left': offsetElementReceiver.left,
             'height': elementReceiver.css("height"),
             'width': elementReceiver.css("width")
-        }, 1000, function () {
+        }, tempsAnimation, function () {
             elementToMoveClone.attr("id", elementReceiver.attr("id"));
             elementToMoveClone.css("position", "");
             elementToMoveClone.removeAttr('style');
