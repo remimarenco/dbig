@@ -113,7 +113,10 @@ $(document).ready(function () {
             i++;
         }
 
-
+        // On slide la dernière image
+        $("#img" + nbImages).animate({
+            paddingLeft: $("#img" + nbImages).width()
+        }, tempsAnimation);
 
         /*
         var ulli = $('body').find('ul li');
