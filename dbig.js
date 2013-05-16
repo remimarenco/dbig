@@ -35,9 +35,10 @@ $(document).ready(function () {
     // Une fois les images chargées
 
     // On lance tout de suite la fonction pour un premier mouvement
-    setTimeout(randomMovingPowa(), tempsPremiereAnimation);
+    setTimeout(function(){randomMovingPowa()}, tempsPremiereAnimation);
 
-    setTimeout(initInterval());
+    var tempsTotalDebut = tempsPremiereAnimation + tempsAnimation;
+    setTimeout(function(){initInterval()}, tempsTotalDebut);
 
     function initInterval()
     {
