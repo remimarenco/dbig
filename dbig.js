@@ -7,8 +7,9 @@ $(document).ready(function () {
 
     var indexImageSuivante = 0;
     var tableauImages = new Array();
-    var tempsRandom = 5000;
-    var tempsAnimation = 3000;
+    var tempsRandom = 7000;
+    var tempsAnimation = 6000;
+    var tempsPremiereAnimation = 2000;
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
@@ -29,10 +30,21 @@ $(document).ready(function () {
         indexImageSuivante = i;
     }
 
-    // Une fois les images chargées, on lance le timer
-    intervalPowa = setInterval(function () { randomMovingPowa() }, tempsRandom);
-
     var inMouvement = false;
+
+    // Une fois les images chargées
+
+    // On lance tout de suite la fonction pour un premier mouvement
+    setTimeout(function(){randomMovingPowa()}, tempsPremiereAnimation);
+
+    var tempsTotalDebut = tempsPremiereAnimation + tempsAnimation;
+    setTimeout(function(){initInterval()}, tempsTotalDebut);
+
+    function initInterval()
+    {
+        // On lance ensuite le timer
+        intervalPowa = setInterval(function () { randomMovingPowa() }, tempsRandom);           
+    }
 
     $("img").click(function () {
         clearInterval(intervalPowa);
@@ -113,7 +125,10 @@ $(document).ready(function () {
             i++;
         }
 
-
+        // On slide la dernière image
+        $("#img" + nbImages).animate({
+            paddingLeft: $("#img" + nbImages).width()
+        }, tempsAnimation);
 
         /*
         var ulli = $('body').find('ul li');
