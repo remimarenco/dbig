@@ -7,9 +7,16 @@ $(document).ready(function () {
 
     var indexImageSuivante = 0;
     var tableauImages = new Array();
-    var tempsRandom = 7000;
-    var tempsAnimation = 6000;
-    var tempsPremiereAnimation = 2000;
+
+    // TODO: Faire une accélération/décélération selon l'état de la transition
+    // TODO: Faire une seule variable qui contrôle les vitesses
+    // TODO: Faire une vitesse différente en fonction du support
+    // TODO: Trouver une solution à la pixellisation de l'image sur le déplacement
+    // TODO: Finir très vite l'animation lors du redimensionnement d'image
+    // TODO: Utiliser le css sur les images pour le redimensionnement en cover
+    var tempsRandom = 4000;
+    var tempsAnimation = 3000;
+    var tempsPremiereAnimation = 500;
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
@@ -129,22 +136,6 @@ $(document).ready(function () {
         $("#img" + nbImages).animate({
             paddingLeft: $("#img" + nbImages).width()
         }, tempsAnimation);
-
-        /*
-        var ulli = $('body').find('ul li');
-        ulli.each(function (index) {
-        if (index !== ulli.length - 1) {
-        // select the next span
-        if ($(ulli.eq(index).find('img'))[0] == $(elementClicked)[0]) {
-        return false;
-        }
-        else {
-        moveToEffect(ulli.eq(index).find('img'), ulli.eq(index + 1).find('img'));
-        }
-
-        }
-        });
-        */
     }
 
     function slideEffect(elementToErase, elementToSlide) {
