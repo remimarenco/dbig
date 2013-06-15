@@ -16,7 +16,7 @@ $(document).ready(function () {
     // TODO: Utiliser le css sur les images pour le redimensionnement en cover
     var tempsRandom = 4000;
     var tempsAnimation = 3000;
-    var tempsPremiereAnimation = 20000;
+    var tempsPremiereAnimation = 500;
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
