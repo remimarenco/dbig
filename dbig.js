@@ -21,7 +21,9 @@ $(document).ready(function () {
 
     var animationUsed = "easeOutQuad";
 
-    var inMouvement = true;
+    var inMouvement = false;
+
+    var verifAnimation = 200;
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
@@ -76,7 +78,7 @@ $(document).ready(function () {
             var img = $(tata.children()[0].children[0]);
 
             img.attr("id", "img" + i);
-            img.attr("alt", $(tableauImages[i-1]).attr("alt"));
+            img.attr("alt", $(tableauImages[i - 1]).attr("alt"));
             //instance.images[0].attr("id", "img" + i);
         }
         indexImageSuivante = i;
@@ -86,6 +88,22 @@ $(document).ready(function () {
 
     // On lance tout de suite la fonction pour un premier mouvement
     setTimeout(function () { randomMovingPowa() }, tempsPremiereAnimation);
+
+    // On lance la fonction pour détecter les mouvements
+    //setTimeout(function () { isAnimate() }, verifAnimation);
+
+    function isAnimate() {
+        if (inMouvement) {
+            // On désactive le css hover
+            $(".divHover").each(function (index) {
+                $(this).removeClass("divHover");
+            });
+        }
+        else {
+
+        }
+    }
+
 
     var tempsTotalDebut = tempsPremiereAnimation + tempsAnimation;
     setTimeout(function () { initInterval() }, tempsTotalDebut);
@@ -115,6 +133,8 @@ $(document).ready(function () {
             intervalPowa = setInterval(function () { randomMovingPowa() }, tempsRandom);
             inMouvement = true;
         }
+
+        isAnimate();
 
         moveToEffect($("#img1"), $("#img2"));
 
@@ -146,6 +166,8 @@ $(document).ready(function () {
         else {
             inMouvement = true;
         }
+
+        isAnimate();
 
         moveToEffect($("#img1"), $("#img2"));
 
@@ -242,6 +264,11 @@ $(document).ready(function () {
             elementToMoveClone.removeClass("animationEnCours");
             // Si on est sur le dernier élément
             inMouvement = false;
+
+            // On réactive le css lorsque c'est terminé
+            $(".divMarkedHover").each(function (index) {
+                $(this).addClass("divHover");
+            });
         });
 
         // On lui remet la fonction movingPowa
