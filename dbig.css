@@ -15,12 +15,12 @@ img
 
 #divTop
 {
-    height: 66%;
+    height: 67%;
 }
 
 #divDown
 {
-    height: 34%;
+    height: 33%;
 }
 
 .divQuart
@@ -35,6 +35,7 @@ img
     height: 50%;
 }
 
+/*
 @media screen and (max-width: 1024px)
 {
     .onlyDesktop
@@ -53,7 +54,6 @@ img
     }
 }
 
-/*Taille arbitraire*/
 @media screen and (max-width: 800px) {
     .onlyDesktopAndTablet {
         display: none;
@@ -69,4 +69,5 @@ img
         width: 100%
     }
 }
+*/
 

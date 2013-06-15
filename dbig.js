@@ -11,18 +11,48 @@ $(document).ready(function () {
     // TODO: Faire une accélération/décélération selon l'état de la transition
     // TODO: Faire une seule variable qui contrôle les vitesses
     // TODO: Faire une vitesse différente en fonction du support
-    // TODO: Trouver une solution à la pixellisation de l'image sur le déplacement
+    // TODO: Trouver une solution à la pixellisation de l'image sur le déplacement (PNG ? SVG ?)
     // TODO: Finir très vite l'animation lors du redimensionnement d'image
-    // TODO: Utiliser le css sur les images pour le redimensionnement en cover
+
+    // OK TODO: Utiliser le css sur les images pour le redimensionnement en cover
     var tempsRandom = 4000;
-    var tempsAnimation = 3000;
+    var tempsAnimation = 2000;
     var tempsPremiereAnimation = 500;
+
+    var animationUsed = "easeInOutQuart";
+
+    var inMouvement = false;
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
         $("#divStockage").children('img').each(function (index) {
             tableauImages[index] = this;
         });
+    }
+
+    // On pose la fonction de détection de resize
+    var rtime = new Date(1, 1, 2000, 12,00,00);
+    var timeout = false;
+    var delta = 2000;
+    $(window).resize(function() {
+        rtime = new Date();
+        if (timeout === false) {
+            timeout = true;
+            setTimeout(resizeend, delta);
+        }
+
+        //this.stop(true,true);
+        inMouvement = true;
+    });
+
+    function resizeend() {
+        if (new Date() - rtime < delta) {
+            setTimeout(resizeend, delta);
+        } else {
+            inMouvement = false;
+            timeout = false;
+            //alert('Done resizing');
+        }               
     }
 
     // On charge d'abord les images dans les cases, en fonction de la taille
@@ -44,8 +74,6 @@ $(document).ready(function () {
         }
         indexImageSuivante = i;
     }
-
-    var inMouvement = true;
 
     // Une fois les images chargées
 
@@ -212,12 +240,14 @@ $(document).ready(function () {
         if ($(document).width() >= 1025) {
             _nbImages = 18;
         }
+        /* A utiliser si on remet les colonnes
         else if ($(document).width() >= 800) {
             _nbImages = 12;
         }
         else {
             _nbImages = 6;
         }
+        */
 
         return _nbImages;
     }
