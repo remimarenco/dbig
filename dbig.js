@@ -21,7 +21,7 @@ $(document).ready(function () {
 
     var animationUsed = "easeOutQuad";
 
-    var inMouvement = false;
+    var inMouvement = true;
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {

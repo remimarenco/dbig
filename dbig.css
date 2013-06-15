@@ -36,6 +36,18 @@ img
     height: 50%;
 }
 
+.divHover
+{
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;  
+}
+
+.divHover:hover{
+    opacity: 0.5;
+}
+
 /*
 @media screen and (max-width: 1024px)
 {
