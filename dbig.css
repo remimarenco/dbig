@@ -13,31 +13,14 @@ img
     height: 100%;
 }
 
-.imgType1
-{
-    
-}
-
-.imgType2
-{
-    width: 25%;
-    height: 33.33333%;
-}
-
-.imgType3
-{
-    width: 12.5%;
-    height: 16.66667%;
-}
-
 #divTop
 {
-    height: 67%;
+    height: 66%;
 }
 
 #divDown
 {
-    height: 33%;
+    height: 34%;
 }
 
 .divQuart

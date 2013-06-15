@@ -45,7 +45,7 @@ $(document).ready(function () {
         indexImageSuivante = i;
     }
 
-    var inMouvement = false;
+    var inMouvement = true;
 
     // Une fois les images chargées
 
