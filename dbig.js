@@ -73,8 +73,10 @@ $(document).ready(function () {
             //var monImg = toto.children("img")[0];
             // On récupère l'instance des images backstretch
             //var instance = $("#div" + i).data('backstretch');
+            var img = $(tata.children()[0].children[0]);
 
-            $(tata.children()[0].children[0]).attr("id", "img" + i);
+            img.attr("id", "img" + i);
+            img.attr("alt", $(tableauImages[i-1]).attr("alt"));
             //instance.images[0].attr("id", "img" + i);
         }
         indexImageSuivante = i;
