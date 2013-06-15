@@ -16,7 +16,7 @@ $(document).ready(function () {
     // TODO: Utiliser le css sur les images pour le redimensionnement en cover
     var tempsRandom = 4000;
     var tempsAnimation = 3000;
-    var tempsPremiereAnimation = 500;
+    var tempsPremiereAnimation = 20000;
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
@@ -31,8 +31,16 @@ $(document).ready(function () {
     for (var i = 1; i <= nbImages; i++) {
         if ($("#div" + i).exists()) {
             jImg = $(tableauImages[i - 1]).clone();
-            jImg.attr("id", "img" + i);
-            $("#div" + i).append(jImg);
+            //jImg.attr("id", "img" + i);
+            //$("#div" + i).append(jImg);
+            var tata = $("#div" + i).backstretch(jImg.attr("src"), { speed: 150 });
+
+            //var monImg = toto.children("img")[0];
+            // On récupère l'instance des images backstretch
+            //var instance = $("#div" + i).data('backstretch');
+
+            $(tata.children()[0].children[0]).attr("id", "img" + i);
+            //instance.images[0].attr("id", "img" + i);
         }
         indexImageSuivante = i;
     }
@@ -42,15 +50,14 @@ $(document).ready(function () {
     // Une fois les images chargées
 
     // On lance tout de suite la fonction pour un premier mouvement
-    setTimeout(function(){randomMovingPowa()}, tempsPremiereAnimation);
+    setTimeout(function () { randomMovingPowa() }, tempsPremiereAnimation);
 
     var tempsTotalDebut = tempsPremiereAnimation + tempsAnimation;
-    setTimeout(function(){initInterval()}, tempsTotalDebut);
+    setTimeout(function () { initInterval() }, tempsTotalDebut);
 
-    function initInterval()
-    {
+    function initInterval() {
         // On lance ensuite le timer
-        intervalPowa = setInterval(function () { randomMovingPowa() }, tempsRandom);           
+        intervalPowa = setInterval(function () { randomMovingPowa() }, tempsRandom);
     }
 
     $("img").click(function () {
@@ -215,4 +222,3 @@ $(document).ready(function () {
         return _nbImages;
     }
 });
-
