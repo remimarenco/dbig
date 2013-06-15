@@ -17,9 +17,9 @@ $(document).ready(function () {
     // OK TODO: Utiliser le css sur les images pour le redimensionnement en cover
     var tempsRandom = 4000;
     var tempsAnimation = 2000;
-    var tempsPremiereAnimation = 500;
+    var tempsPremiereAnimation = 2000;
 
-    var animationUsed = "easeInOutQuart";
+    var animationUsed = "easeOutQuad";
 
     var inMouvement = false;
 
@@ -31,15 +31,20 @@ $(document).ready(function () {
     }
 
     // On pose la fonction de détection de resize
-    var rtime = new Date(1, 1, 2000, 12,00,00);
+    var rtime = new Date(1, 1, 2000, 12, 00, 00);
     var timeout = false;
     var delta = 2000;
-    $(window).resize(function() {
+    $(window).resize(function () {
         rtime = new Date();
         if (timeout === false) {
             timeout = true;
             setTimeout(resizeend, delta);
         }
+
+        $(".animationEnCours").each(
+            function (index) {
+                $(this).stop(true, true);
+            });
 
         //this.stop(true,true);
         inMouvement = true;
@@ -52,7 +57,7 @@ $(document).ready(function () {
             inMouvement = false;
             timeout = false;
             //alert('Done resizing');
-        }               
+        }
     }
 
     // On charge d'abord les images dans les cases, en fonction de la taille
@@ -188,8 +193,12 @@ $(document).ready(function () {
         $(thisClone).css("top", "");
 
         elementToErase.replaceWith($(thisClone));
+
+        $(thisClone).addClass("animationEnCours");
+
         $(thisClone).show("slide", tempsAnimation, function () {
             $(this).removeAttr('style');
+            $(this).removeClass("animationEnCours");
         });
     }
 
@@ -215,6 +224,8 @@ $(document).ready(function () {
         // On cache l'élément qui recoit pour éviter de le voir pendant l'animation
         elementToMove.attr("src", "images/transparent.gif");
 
+        elementToMoveClone.addClass("animationEnCours");
+
         elementToMoveClone.animate({
             'top': offsetElementReceiver.top,
             'left': offsetElementReceiver.left,
@@ -226,6 +237,7 @@ $(document).ready(function () {
             elementToMoveClone.removeAttr('style');
             elementReceiver.replaceWith(elementToMoveClone);
 
+            elementToMoveClone.removeClass("animationEnCours");
             // Si on est sur le dernier élément
             inMouvement = false;
         });
@@ -242,10 +254,10 @@ $(document).ready(function () {
         }
         /* A utiliser si on remet les colonnes
         else if ($(document).width() >= 800) {
-            _nbImages = 12;
+        _nbImages = 12;
         }
         else {
-            _nbImages = 6;
+        _nbImages = 6;
         }
         */
 
