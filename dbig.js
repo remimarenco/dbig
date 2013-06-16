@@ -22,7 +22,7 @@ $(document).ready(function () {
 
     var animationUsed = "easeOutQuad";
 
-    var inMouvement = false;
+    var inMouvement = true;
 
     var verifAnimation = 200;
 
@@ -211,23 +211,34 @@ $(document).ready(function () {
         // On bouge celui qui a été cliqué
         var thisClone = elementToSlide.clone();
 
+        //$(elementToMoveClone).removeAttr('style');
+
         $(thisClone).hide();
         // On lui donne la taille de l'élément également
-        $(thisClone).css("height", elementToErase.css('height'));
-        $(thisClone).css("width", elementToErase.css('width'));
+        //$(thisClone).css("height", elementToErase.css('height'));
+        //$(thisClone).css("width", elementToErase.css('width'));
 
-        $(thisClone).attr("id", elementToErase.attr("id"));
+        //$(thisClone).attr("id", elementToErase.attr("id"));
 
         // On supprime sa valeur top si il en avait une
-        $(thisClone).css("top", "");
+        //$(thisClone).css("top", "");
 
-        elementToErase.replaceWith($(thisClone));
+        var div = $(elementToErase).parent().parent();
+        div.empty();
+        var img = backstretchAndFillIdAndAlt(div, elementToSlide);
+        img.attr("id", "img" + i);
+        img.attr("alt", jImg.attr("alt"));
 
-        $(thisClone).addClass("animationEnCours");
+        $(img).addClass("animationEnCours");
 
-        $(thisClone).show("slide", tempsAnimation, function () {
-            $(this).removeAttr('style');
+        $(img).show("slide", tempsAnimation, function () {
+            //$(this).removeAttr('style');
             $(this).removeClass("animationEnCours");
+
+            $(this).addClass("divHover");
+
+            // On retire l'elementclone
+            //setTimeout(function () { $(elementToErase).remove() }, 500);
         });
     }
 
@@ -250,7 +261,10 @@ $(document).ready(function () {
         $(elementToMoveClone).css("width", elementToMove.parent().css('width'));
 
         // On retire le zindex induit par backstretch
-        $(elementToMoveClone).css("zindex", '');
+        //$(elementToMoveClone).css("zindex", '');
+
+        // On retire l'id
+        $(elementToMoveClone).attr("id", '');
 
         $('body').append($(elementToMoveClone));
         var offsetElementReceiver = elementReceiver.parent().offset();
@@ -266,12 +280,6 @@ $(document).ready(function () {
             'height': elementReceiver.parent().css("height"),
             'width': elementReceiver.parent().css("width")
         }, tempsAnimation, function () {
-            elementToMoveClone.attr("id", elementReceiver.attr("id"));
-            //elementToMoveClone.css("position", "");
-            //elementToMoveClone.removeAttr('style');
-
-
-
             // On rattache un nouveau backstretch au parent du backstretch de ElementReceiver avec l'image de elementToMoveClone
             tableauImagesCourantes[$(elementReceiver.parent().parent()).attr("id")] = elementToMoveClone;
 
@@ -292,8 +300,8 @@ $(document).ready(function () {
                     var imageCourante = tableauImagesCourantes[$(this).attr("id")];
 
                     var img = backstretchAndFillIdAndAlt($(this), imageCourante);
-                    img.attr("id", $(imageCourante).attr("id"));
-                    img.attr("alt", $(imageCourante).attr("alt"));
+                    img.attr("id", "img" + i);
+                    img.attr("alt", jImg.attr("alt"));
 
                     $(this).addClass("divHover");
 
