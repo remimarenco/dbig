@@ -7,6 +7,7 @@ $(document).ready(function () {
 
     var indexImageSuivante = 0;
     var tableauImages = new Array();
+    var tableauImagesCourantes = new Array();
 
     // TODO: Faire une accélération/décélération selon l'état de la transition
     // TODO: Faire une seule variable qui contrôle les vitesses
@@ -265,32 +266,50 @@ $(document).ready(function () {
             'height': elementReceiver.parent().css("height"),
             'width': elementReceiver.parent().css("width")
         }, tempsAnimation, function () {
-            //elementToMoveClone.attr("id", elementReceiver.attr("id"));
+            elementToMoveClone.attr("id", elementReceiver.attr("id"));
             //elementToMoveClone.css("position", "");
             //elementToMoveClone.removeAttr('style');
 
-            // On retire l'enfant du parent de backstretch
-            var divReceiver = elementReceiver.parent().parent();
-            divReceiver.empty();
+
 
             // On rattache un nouveau backstretch au parent du backstretch de ElementReceiver avec l'image de elementToMoveClone
+            tableauImagesCourantes[$(elementReceiver.parent().parent()).attr("id")] = elementToMoveClone;
 
-            var img = backstretchAndFillIdAndAlt(divReceiver, elementToMoveClone);
-            img.attr("id", elementReceiver.attr("id"));
-            img.attr("alt", elementReceiver.attr("alt"));
             //var backstretchElement = divReceiver.backstretch(elementToMoveClone.attr("src"), { speed: 150 });
 
             elementToMoveClone.removeClass("animationEnCours");
-            // Si on est sur le dernier élément
-            inMouvement = false;
 
-            // On réactive le css lorsque c'est terminé
-            $(".divMarkedHover").each(function (index) {
-                $(this).addClass("divHover");
-            });
 
-            // On clean tout après quelques secondes
-            setTimeout(function () { elementToMoveClone.remove() }, 500);
+            // On réactive le css lorsque c'est terminé et que l'on est sur la dernière case
+            if ($(elementReceiver).attr("id") == "img18") {
+                $(".divMarkedHover").each(function (index) {
+                    if ($(this).attr("id") == "div1") {
+                        return;
+                    }
+                    // On retire l'enfant du parent de backstretch
+                    $(this).empty();
+
+                    var imageCourante = tableauImagesCourantes[$(this).attr("id")];
+
+                    var img = backstretchAndFillIdAndAlt($(this), imageCourante);
+                    img.attr("id", $(imageCourante).attr("id"));
+                    img.attr("alt", $(imageCourante).attr("alt"));
+
+                    $(this).addClass("divHover");
+
+                    // On retire l'elementclone
+                    setTimeout(function () { $(imageCourante).remove() }, 500);
+                });
+
+                tableauImagesCourantes = [];
+
+                // On clean tout après quelques secondes
+
+
+                // Si on est sur le dernier élément
+                inMouvement = false;
+            }
+
         });
 
         // On lui remet la fonction movingPowa
