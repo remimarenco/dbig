@@ -68,13 +68,13 @@ $(document).ready(function () {
 
     for (var i = 1; i <= nbImages; i++) {
         if ($("#div" + i).exists()) {
-            jImg = $(tableauImages[i - 1]).clone();
+            jImg = $(tableauImages[i - 1]);
             //jImg.attr("id", "img" + i);
             //$("#div" + i).append(jImg);
             var maDiv = $("#div" + i);
             var img = backstretchAndFillIdAndAlt(maDiv, jImg);
             img.attr("id", "img" + i);
-            img.attr("alt", $(tableauImages[i - 1]).attr("alt"));
+            img.attr("alt", jImg.attr("alt"));
         }
         indexImageSuivante = i;
     }
