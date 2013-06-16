@@ -70,18 +70,22 @@ $(document).ready(function () {
             jImg = $(tableauImages[i - 1]).clone();
             //jImg.attr("id", "img" + i);
             //$("#div" + i).append(jImg);
-            var tata = $("#div" + i).backstretch(jImg.attr("src"), { speed: 150 });
-
-            //var monImg = toto.children("img")[0];
-            // On récupère l'instance des images backstretch
-            //var instance = $("#div" + i).data('backstretch');
-            var img = $(tata.children()[0].children[0]);
-
+            var maDiv = $("#div" + i);
+            var img = backstretchAndFillIdAndAlt(maDiv, jImg);
             img.attr("id", "img" + i);
             img.attr("alt", $(tableauImages[i - 1]).attr("alt"));
-            //instance.images[0].attr("id", "img" + i);
         }
         indexImageSuivante = i;
+    }
+
+    function backstretchAndFillIdAndAlt(maDiv, jImg) {
+        var tata = maDiv.backstretch(jImg.attr("src"), { speed: 150 });
+
+        //var monImg = toto.children("img")[0];
+        // On récupère l'instance des images backstretch
+        //var instance = $("#div" + i).data('backstretch');
+        var img = $(tata.children()[0].children[0]);
+        return img;
     }
 
     // Une fois les images chargées
@@ -233,17 +237,22 @@ $(document).ready(function () {
         // addClass, .className.split(' ')[0];
         // .attr(id, value);
 
+        $(elementToMoveClone).removeAttr('style');
+
         // On lui met une position absolue
         $(elementToMoveClone).css("position", "absolute");
-        $(elementToMoveClone).css("top", elementToMove.offset().top);
-        $(elementToMoveClone).css("left", elementToMove.offset().left);
+        $(elementToMoveClone).css("top", elementToMove.parent().offset().top);
+        $(elementToMoveClone).css("left", elementToMove.parent().offset().left);
 
         // On lui donne la taille de l'élément également
-        $(elementToMoveClone).css("height", elementToMove.css('height'));
-        $(elementToMoveClone).css("width", elementToMove.css('width'));
+        $(elementToMoveClone).css("height", elementToMove.parent().css('height'));
+        $(elementToMoveClone).css("width", elementToMove.parent().css('width'));
+
+        // On retire le zindex induit par backstretch
+        $(elementToMoveClone).css("zindex", '');
 
         $('body').append($(elementToMoveClone));
-        var offsetElementReceiver = elementReceiver.offset();
+        var offsetElementReceiver = elementReceiver.parent().offset();
 
         // On cache l'élément qui recoit pour éviter de le voir pendant l'animation
         elementToMove.attr("src", "images/transparent.gif");
@@ -253,13 +262,23 @@ $(document).ready(function () {
         elementToMoveClone.animate({
             'top': offsetElementReceiver.top,
             'left': offsetElementReceiver.left,
-            'height': elementReceiver.css("height"),
-            'width': elementReceiver.css("width")
+            'height': elementReceiver.parent().css("height"),
+            'width': elementReceiver.parent().css("width")
         }, tempsAnimation, function () {
-            elementToMoveClone.attr("id", elementReceiver.attr("id"));
-            elementToMoveClone.css("position", "");
-            elementToMoveClone.removeAttr('style');
-            elementReceiver.replaceWith(elementToMoveClone);
+            //elementToMoveClone.attr("id", elementReceiver.attr("id"));
+            //elementToMoveClone.css("position", "");
+            //elementToMoveClone.removeAttr('style');
+
+            // On retire l'enfant du parent de backstretch
+            var divReceiver = elementReceiver.parent().parent();
+            divReceiver.empty();
+
+            // On rattache un nouveau backstretch au parent du backstretch de ElementReceiver avec l'image de elementToMoveClone
+
+            var img = backstretchAndFillIdAndAlt(divReceiver, elementToMoveClone);
+            img.attr("id", elementReceiver.attr("id"));
+            img.attr("alt", elementReceiver.attr("alt"));
+            //var backstretchElement = divReceiver.backstretch(elementToMoveClone.attr("src"), { speed: 150 });
 
             elementToMoveClone.removeClass("animationEnCours");
             // Si on est sur le dernier élément
@@ -269,10 +288,13 @@ $(document).ready(function () {
             $(".divMarkedHover").each(function (index) {
                 $(this).addClass("divHover");
             });
+
+            // On clean tout après quelques secondes
+            setTimeout(function () { elementToMoveClone.remove() }, 500);
         });
 
         // On lui remet la fonction movingPowa
-        $(elementToMoveClone).click(function () {
+        $(img).click(function () {
             movingPowa(this);
         });
     }
