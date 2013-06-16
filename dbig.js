@@ -226,8 +226,8 @@ $(document).ready(function () {
         var div = $(elementToErase).parent().parent();
         div.empty();
         var img = backstretchAndFillIdAndAlt(div, elementToSlide);
-        img.attr("id", "img" + i);
-        img.attr("alt", jImg.attr("alt"));
+        img.attr("id", elementToErase.attr("id"));
+        img.attr("alt", elementToSlide.attr("alt"));
 
         $(img).addClass("animationEnCours");
 
@@ -280,6 +280,7 @@ $(document).ready(function () {
             'height': elementReceiver.parent().css("height"),
             'width': elementReceiver.parent().css("width")
         }, tempsAnimation, function () {
+            elementToMoveClone.attr("id", elementReceiver.attr("id"));
             // On rattache un nouveau backstretch au parent du backstretch de ElementReceiver avec l'image de elementToMoveClone
             tableauImagesCourantes[$(elementReceiver.parent().parent()).attr("id")] = elementToMoveClone;
 
@@ -289,7 +290,7 @@ $(document).ready(function () {
 
 
             // On réactive le css lorsque c'est terminé et que l'on est sur la dernière case
-            if ($(elementReceiver).attr("id") == "img18") {
+            if ($(elementReceiver).attr("id") == ("img"+nbImages)) {
                 $(".divMarkedHover").each(function (index) {
                     if ($(this).attr("id") == "div1") {
                         return;
@@ -300,7 +301,7 @@ $(document).ready(function () {
                     var imageCourante = tableauImagesCourantes[$(this).attr("id")];
 
                     var img = backstretchAndFillIdAndAlt($(this), imageCourante);
-                    img.attr("id", "img" + i);
+                    img.attr("id", imageCourante.attr("id"));
                     img.attr("alt", jImg.attr("alt"));
 
                     $(this).addClass("divHover");
