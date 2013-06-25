@@ -40,6 +40,10 @@ html, body
     -webkit-transition: opacity .25s ease-in-out;  
 }
 
+.divMarkedHover:hover{
+    opacity: 0.5;
+}
+
 .backgroundHover{
     background-color: #56C0D7;
     opacity: 0.7;

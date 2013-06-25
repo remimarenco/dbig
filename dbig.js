@@ -1,6 +1,10 @@
 /*
 TODO: Supprimer la dernière colonne => On oublie
 TODO: Modifier la resolution des images pour voir le resultat
+TODO: Regler le probleme de l'animation qui reprend apres un resize
+TODO: BIG => Gerer les autres supports
+TODO: Remettre le hover sur les autres images
+TODO: Supprimer les hover en deplacement
  */
 
 $(document).ready(function(){
@@ -57,10 +61,11 @@ $(document).ready(function(){
     {
         //intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
         movingClicked(this);
+        stopAnimate();
         //inMouvement = true;
     }
 
-    $(".divMarkedHover").hover(function (e) {
+    $(".divMarkedHoverPrincipal").hover(function (e) {
         if($(this).attr("id") == "div1")
         {
             var $newConteneur = $('<span class="spanHover"></span>');
@@ -115,12 +120,23 @@ $(document).ready(function(){
     function isAnimate() {
         if (inMouvement) {
             // On désactive le css hover
-            $(".divHover").each(function (index) {
-                $(this).removeClass("divHover");
+            $(".divMarkedHoverPrincipal").mouseleave();
+            $(".divMarkedHoverPrincipal").removeClass("divMarkedHoverPrincipal");
+
+            $(".divMarkedHover").each(function (index) {
+                $(this).removeClass("divMarkedHover");
             });
         }
-        else {
+    }
 
+    function stopAnimate(){
+        if (!inMouvement) {
+            // On désactive le css hover
+            $(".divMarkedHoverPrincipal").addClass("divMarkedHoverPrincipal");            
+
+            $(".divMarkedHover").each(function (index) {
+                $(this).addClass("divMarkedHover");
+            });
         }
     }
 
@@ -184,7 +200,7 @@ $(document).ready(function(){
 
         $elementToErase.append($newDiv);
 
-        $newDiv.show("slide", 2000, function () {
+        $newDiv.show("slide", tempsAnimation, function () {
             //$(this).removeAttr('style');
             $(this).removeClass("animationEnCours");
 
@@ -224,12 +240,13 @@ $(document).ready(function(){
             'left': offsetElementReceiver.left,
             'height': $divToReceive.css('height'),
             'width': $divToReceive.css('width')
-        }, 2000, function(){
+        }, tempsAnimation, function(){
             // On supprime la div qui vient de bouger, et on fait apparaitre la nouvelle
             // Remettre le remove à la fin de l'effet
             $divToMoveChild.remove();
             $newDiv.css("display", "");
 
+            // On rattache l'eventhandler
             $newDiv.click(imageClicked);
 
             inMouvement = false;
@@ -299,7 +316,7 @@ $(document).ready(function(){
             {
                 direction: "right"
             },
-            2000, function(){
+            tempsAnimation, function(){
                 $divASlide.removeClass("animationEnCours");
                 $(this).remove();
             })
