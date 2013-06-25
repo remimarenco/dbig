@@ -61,7 +61,7 @@ $(document).ready(function(){
     {
         //intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
         movingClicked(this);
-        stopAnimate();
+        setTimeout(function () { stopAnimate(); }, tempsAnimation+50);
         //inMouvement = true;
     }
 
@@ -132,11 +132,13 @@ $(document).ready(function(){
     function stopAnimate(){
         if (!inMouvement) {
             // On désactive le css hover
-            $(".divMarkedHoverPrincipal").addClass("divMarkedHoverPrincipal");            
-
-            $(".divMarkedHover").each(function (index) {
-                $(this).addClass("divMarkedHover");
-            });
+            $("#div1").addClass("divMarkedHoverPrincipal");
+            for(var i = 2; i <= nbImages; i++)
+            {
+                $("#div"+i).each(function (index) {
+                    $(this).addClass("divMarkedHover");
+                });
+            }
         }
     }
 
@@ -187,6 +189,8 @@ $(document).ready(function(){
         moveGlobal();
 
         slideLast();
+
+        setTimeout(function () { stopAnimate(); }, tempsAnimation+50);
     }
 
     function slideEffect($elementToErase, urlImageElementToSlide) {
