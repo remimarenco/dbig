@@ -1,6 +1,7 @@
 /*
 TODO: Supprimer la dernière colonne => On oublie
-TODO: Hover bleu avec croix
+TODO: Hover bleu avec croix => Ok
+TODO: Gérer correctement la fin d'animation
 TODO: Croix qui reprend l'animation
  */
 
@@ -19,8 +20,6 @@ $(document).ready(function(){
     var tempsRandom = 4000;
     var tempsAnimation = 2000;
     var tempsPremiereAnimation = 2000;
-
-    var inMouvement = true;
 
     var verifAnimation = 200;
 
@@ -43,6 +42,9 @@ $(document).ready(function(){
         //indexImageSuivante = i;
     }
 
+    // On lance tout de suite la fonction pour un premier mouvement
+    setTimeout(function () { randomMoving() }, tempsPremiereAnimation);
+
     var tempsTotalDebut = tempsPremiereAnimation + tempsAnimation;
     setTimeout(function () { initInterval() }, tempsTotalDebut);
 
@@ -51,15 +53,17 @@ $(document).ready(function(){
         intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
     }
 
-    $(".redim").click(function (e) {
+    $(".redim").click(imageClicked);
+
+    function imageClicked(e)
+    {
         if(intervalPowa != 'undefined')
         {
             clearInterval(intervalPowa);
         }
         intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
         movingClicked(this);
-        e.stopPropagation();
-    });
+    }
 
     $(".divMarkedHover").hover(function (e) {
         if($(this).attr("id") == "div1")
@@ -95,7 +99,6 @@ $(document).ready(function(){
 
     function addContenuHover($newDiv)
     {
-        // float right
         var $newBouton = $('<img class="boutonReplayHover" src="ressources/bouton/close.png">')
         var $newTitle = $('<span class="titleHover">Lorem ipsum dolor</span>');
         var $newText = $('<span class="textInfosHover">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, voluptatem aut fuga. Ex, repudiandae assumenda quos nostrum itaque beatae eius.</span>');
@@ -208,6 +211,8 @@ $(document).ready(function(){
         $divToMoveChild.css("width", $divToMove.css('width'));
         $divToMoveChild.css("position", "absolute");
 
+        $divToMoveChild.addClass("animationEnCours");
+
         var offsetElementReceiver = $divToReceive.offset();
 
         // On fait l'effet de mouvement sur la divToMove
@@ -221,6 +226,8 @@ $(document).ready(function(){
             // Remettre le remove à la fin de l'effet
             $divToMoveChild.remove();
             $newDiv.css("display", "");
+
+            $newDiv.click(imageClicked);
 
             inMouvement = false;
         });
@@ -281,15 +288,18 @@ $(document).ready(function(){
 
     function slideLast()
     {
+        $divASlide = $($("#div" + nbImages).children().get(0));
         // On slide la dernière image
-        $($("#div" + nbImages).children().get(0)).hide(
+        $divASlide.addClass("animationEnCours");
+        $($divASlide.hide(
             "slide",
             {
                 direction: "right"
             },
             2000, function(){
+                $divASlide.removeClass("animationEnCours");
                 $(this).remove();
-            }
+            })
         );
     }
 });

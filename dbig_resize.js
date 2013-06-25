@@ -16,7 +16,6 @@ $(document).ready(function(){
                 $(this).stop(true, true);
             });
 
-        //this.stop(true,true);
         inMouvement = true;
     });
 
