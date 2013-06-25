@@ -91,10 +91,10 @@ $(document).ready(function(){
     });
 
     $("#div1").click(function (e) {
-        $(e.target).is('.boutonReplayHover')
+        if($(e.target).is('.boutonReplayHover'))
         {
             // On réactive l'animation directement et on lui met un intervalle
-
+            console.log("On a clique sur le bouton");
             initInterval();
         }
 
