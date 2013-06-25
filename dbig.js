@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	// Fonction de vérification de la longueur du tableau
-	jQuery.fn.exists = function () { return this.length > 0; }
+    // Fonction de vérification de la longueur du tableau
+    jQuery.fn.exists = function () { return this.length > 0; }
 
     var tableauImages = new Array();
     var tableauImagesCourantes = new Array();
