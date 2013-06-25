@@ -55,6 +55,44 @@ $(document).ready(function(){
         e.stopPropagation();
     });
 
+    $(".divMarkedHover").hover(function (e) {
+        /*
+        if($(this).attr("id") == "div1")
+        {
+            var $newDiv = $('<div id="hoverBackgroundId" class="backgroundHover"></div>');
+            // On met la taille offset de la div que l'on hover
+
+
+            var $newSpan = $('<span id="spanContenuHover"></span>');
+            addContenuHover($newSpan);
+
+            
+            $(this).children().append($newDiv);
+            $(this).children().append($newSpan);
+
+            console.log("on entre");
+        }
+    }, function(e){
+        if($(this).attr("id") == "div1")
+        {
+            $(this).children().empty();
+            console.log("On sort");
+        }
+        */
+    });
+
+    function addContenuHover($newDiv)
+    {
+        // float right
+        var $newBouton = $('<img class="boutonReplayHover" src="ressources/bouton/close.png">')
+        //var $newTitle = $('<span class="titleHover">Lorem ipsum dolor</span>');
+        //var $newText = $('<span class="textInfosHover">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, voluptatem aut fuga. Ex, repudiandae assumenda quos nostrum itaque beatae eius.</span>');
+        
+        $newDiv.append($newBouton);
+        //$newDiv.append($newTitle);
+        //$newDiv.append($newText);
+    }
+
     // On lance la fonction pour détecter les mouvements
     setTimeout(function () { isAnimate() }, verifAnimation);
 
@@ -134,9 +172,6 @@ $(document).ready(function(){
             $(this).removeClass("animationEnCours");
 
             $(this).addClass("divHover");
-
-            // On retire l'elementclone
-            //setTimeout(function () { $elementToErase.remove() }, 500);
         });
     }
 
