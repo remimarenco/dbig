@@ -10,7 +10,13 @@ $(document).ready(function(){
 
     var indexImageSuivante = nbImages;
 
+    var tempsRandom = 4000;
+    var tempsAnimation = 2000;
+    var tempsPremiereAnimation = 2000;
+
     var inMouvement = false;
+
+    var verifAnimation = 200;
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
@@ -29,9 +35,22 @@ $(document).ready(function(){
         //indexImageSuivante = i;
     }
 
-    
-    // On lance ensuite le timer
-    intervalPowa = setInterval(function () { randomMoving() }, 4000);
+    var tempsTotalDebut = tempsPremiereAnimation + tempsAnimation;
+    setTimeout(function () { initInterval() }, tempsTotalDebut);
+
+    function initInterval() {
+        // On lance ensuite le timer
+        intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
+    }
+
+    $("img").click(function () {
+        clearInterval(intervalPowa);
+        intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
+        movingPowa(this);
+    });
+
+    // On lance la fonction pour détecter les mouvements
+    setTimeout(function () { isAnimate() }, verifAnimation);
 
     function isAnimate() {
         if (inMouvement) {
