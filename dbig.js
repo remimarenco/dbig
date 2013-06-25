@@ -1,8 +1,6 @@
 /*
 TODO: Supprimer la dernière colonne => On oublie
-TODO: Hover bleu avec croix => Ok
-TODO: Gérer correctement la fin d'animation
-TODO: Croix qui reprend l'animation
+TODO: Modifier la resolution des images pour voir le resultat
  */
 
 $(document).ready(function(){
@@ -151,7 +149,7 @@ $(document).ready(function(){
         moveUntilClicked(elementClicked);
 
         // On retire l'élément qui a été cliqué en fin de transition
-        setTimeout(function () { $(elementClicked).remove() }, tempsAnimation);
+        setTimeout(function () { $(elementClicked).remove() }, tempsAnimation-50);
     }
 
     function randomMoving(){
