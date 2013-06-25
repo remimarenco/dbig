@@ -213,6 +213,7 @@ $(document).ready(function(){
         $divToMoveChild.css("left", $divToMove.offset().left);
         $divToMoveChild.css("height", $divToMove.css('height'));
         $divToMoveChild.css("width", $divToMove.css('width'));
+        $divToMoveChild.css("z-index", "20");
         $divToMoveChild.css("position", "absolute");
 
         $divToMoveChild.addClass("animationEnCours");
