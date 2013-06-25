@@ -1,6 +1,12 @@
+/*
+TODO: Supprimer la dernière colonne => On oublie
+TODO: Hover bleu avec croix
+TODO: Croix qui reprend l'animation
+ */
+
 $(document).ready(function(){
     // Fonction de vérification de la longueur du tableau
-    jQuery.fn.exists = function () { return this.length > 0; }
+    jQuery.fn.exists = function () { return this.length > 0; };
 
     var tableauImages = new Array();
     var tableauImagesCourantes = new Array();
@@ -14,7 +20,7 @@ $(document).ready(function(){
     var tempsAnimation = 2000;
     var tempsPremiereAnimation = 2000;
 
-    var inMouvement = false;
+    var inMouvement = true;
 
     var verifAnimation = 200;
 
@@ -56,41 +62,47 @@ $(document).ready(function(){
     });
 
     $(".divMarkedHover").hover(function (e) {
-        /*
         if($(this).attr("id") == "div1")
         {
+            var $newConteneur = $('<span class="spanHover"></span>');
             var $newDiv = $('<div id="hoverBackgroundId" class="backgroundHover"></div>');
             // On met la taille offset de la div que l'on hover
 
-
-            var $newSpan = $('<span id="spanContenuHover"></span>');
+            var $newSpan = $('<span class="spanContenuHover"></span>');
             addContenuHover($newSpan);
 
-            
-            $(this).children().append($newDiv);
-            $(this).children().append($newSpan);
+            $newConteneur.append($newDiv);
+            $newConteneur.append($newSpan);
 
-            console.log("on entre");
+            $(this).children().append($newConteneur);
+
+            $newConteneur.show("slow");
+            //$(this).children().append($newSpan);
         }
     }, function(e){
         if($(this).attr("id") == "div1")
         {
-            $(this).children().empty();
-            console.log("On sort");
+            $div = $(this);
+            $('.spanHover').hide("slow", function(){
+                $div.children().empty();
+            });
         }
-        */
+    });
+
+    $(".boutonReplayHover").click(function (e) {
+        // On réactive l'animation
     });
 
     function addContenuHover($newDiv)
     {
         // float right
         var $newBouton = $('<img class="boutonReplayHover" src="ressources/bouton/close.png">')
-        //var $newTitle = $('<span class="titleHover">Lorem ipsum dolor</span>');
-        //var $newText = $('<span class="textInfosHover">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, voluptatem aut fuga. Ex, repudiandae assumenda quos nostrum itaque beatae eius.</span>');
+        var $newTitle = $('<span class="titleHover">Lorem ipsum dolor</span>');
+        var $newText = $('<span class="textInfosHover">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, voluptatem aut fuga. Ex, repudiandae assumenda quos nostrum itaque beatae eius.</span>');
         
         $newDiv.append($newBouton);
-        //$newDiv.append($newTitle);
-        //$newDiv.append($newText);
+        $newDiv.append($newTitle);
+        $newDiv.append($newText);
     }
 
     // On lance la fonction pour détecter les mouvements
