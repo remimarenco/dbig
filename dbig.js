@@ -18,6 +18,8 @@ $(document).ready(function(){
 
     var verifAnimation = 200;
 
+    var intervalPowa;
+
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
         $("#divStockage").children('img').each(function (index) {
@@ -43,10 +45,14 @@ $(document).ready(function(){
         intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
     }
 
-    $("img").click(function () {
-        clearInterval(intervalPowa);
+    $(".redim").click(function (e) {
+        if(intervalPowa != 'undefined')
+        {
+            clearInterval(intervalPowa);
+        }
         intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
-        movingPowa(this);
+        movingClicked(this);
+        e.stopPropagation();
     });
 
     // On lance la fonction pour détecter les mouvements
@@ -64,11 +70,40 @@ $(document).ready(function(){
         }
     }
 
+    function movingClicked(elementClicked) {
+        // Si on a cliqué sur l'image principale, on ne lance pas l'algo
+        if ($(elementClicked).parent().attr("id") == "#div1") {
+            return false;
+        }
+
+        if (inMouvement) {
+            return false;
+        }
+        else {
+            clearInterval(intervalPowa);
+            intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
+            inMouvement = true;
+        }
+
+        isAnimate();
+
+        moveFirst();
+
+        slideFromClicked(elementClicked);
+
+        moveUntilClicked(elementClicked);
+
+        // On retire l'élément qui a été cliqué en fin de transition
+        setTimeout(function () { $(elementClicked).remove() }, tempsAnimation);
+    }
+
     function randomMoving(){
         if (inMouvement) {
             return false;
         }
         else {
+            clearInterval(intervalPowa);
+            intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
             inMouvement = true;
         }
 
@@ -83,12 +118,12 @@ $(document).ready(function(){
         slideLast();
     }
 
-    function slideEffect($elementToErase, $srcImageElementToSlide) {
+    function slideEffect($elementToErase, urlImageElementToSlide) {
         // On va créer une div redim qui va accueillir la nouvelle image
         var $newDiv = $('<div class="redim"></div>');
         $newDiv.css("display", "none");
         // On le cache pour le moment
-        $newDiv.css("background-image", "url("+$srcImageElementToSlide+")");
+        $newDiv.css("background-image", urlImageElementToSlide);
 
         $newDiv.addClass("animationEnCours");
 
@@ -152,7 +187,7 @@ $(document).ready(function(){
     function slideFromStorage()
     {
         // On lance le slide effect
-        slideEffect($('#div1'), $(tableauImages[indexImageSuivante]).attr("src"));
+        slideEffect($('#div1'), "url("+$(tableauImages[indexImageSuivante]).attr("src")+")");
 
         if (indexImageSuivante - 1 <= 0) {
             // On recommence à l'index 0
@@ -163,12 +198,28 @@ $(document).ready(function(){
         }
     }
 
+    function slideFromClicked(elementClicked)
+    {
+        // On lance le slide effect
+        slideEffect($('#div1'), $(elementClicked).css("background-image"));
+    }
+
     function moveGlobal()
     {
-        var i = 2;
+        moveFromTo(2, $($("#div"+nbImages).children().get(0)));
+    }
+
+    function moveUntilClicked(elementClicked)
+    {
+        moveFromTo(2, $(elementClicked));
+    }
+
+    function moveFromTo(fromInt, $toElement)
+    {
+        var i = fromInt;
         var iNext = 0;
 
-        while ($("#div" + i).exists() && $("#div" + i).attr("id") != $("#div" + nbImages).attr("id")) {
+        while ($("#div" + i).exists() && $("#div" + i).attr("id") != $toElement.parent().attr("id")) {
             iNext = i + 1;
             //console.log("On bouge l'enfant " + $("#div" + i).attr("id") + " vers " + $("#div" + iNext).attr("id"));
             moveToEffect($("#div" + i), $("#div" + iNext));

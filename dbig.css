@@ -37,7 +37,7 @@ img
     height: 50%;
 }
 
-.divHover
+.redim
 {
   opacity: 1;
   transition: opacity .25s ease-in-out;
@@ -45,7 +45,7 @@ img
   -webkit-transition: opacity .25s ease-in-out;  
 }
 
-.divHover:hover{
+.redim:hover{
     opacity: 0.5;
 }
 
