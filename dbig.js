@@ -45,8 +45,8 @@ $(document).ready(function(){
     // On lance tout de suite la fonction pour un premier mouvement
     setTimeout(function () { randomMoving() }, tempsPremiereAnimation);
 
-    var tempsTotalDebut = tempsPremiereAnimation + tempsAnimation;
-    setTimeout(function () { initInterval() }, tempsTotalDebut);
+    // var tempsTotalDebut = tempsPremiereAnimation + tempsAnimation;
+    // setTimeout(function () { initInterval() }, tempsTotalDebut);
 
     function initInterval() {
         // On lance ensuite le timer
@@ -57,12 +57,9 @@ $(document).ready(function(){
 
     function imageClicked(e)
     {
-        if(intervalPowa != 'undefined')
-        {
-            clearInterval(intervalPowa);
-        }
-        intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
+        //intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
         movingClicked(this);
+        //inMouvement = true;
     }
 
     $(".divMarkedHover").hover(function (e) {
@@ -93,8 +90,14 @@ $(document).ready(function(){
         }
     });
 
-    $(".boutonReplayHover").click(function (e) {
-        // On réactive l'animation
+    $("#div1").click(function (e) {
+        $(e.target).is('.boutonReplayHover')
+        {
+            // On réactive l'animation directement et on lui met un intervalle
+
+            initInterval();
+        }
+
     });
 
     function addContenuHover($newDiv)
@@ -133,8 +136,9 @@ $(document).ready(function(){
             return false;
         }
         else {
+            // On arrete l'animation
             clearInterval(intervalPowa);
-            intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
+            intervalPowa = null;
             inMouvement = true;
         }
 
