@@ -61,12 +61,19 @@ $(document).ready(function(){
     {
         //intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
         movingClicked(this);
-        setTimeout(function () { stopAnimate(); }, tempsAnimation+50);
+        setTimeout(function () { 
+            stopAnimate(); 
+            $("#div1").addClass("divMarkedHoverPrincipal");
+            $(".divMarkedHoverPrincipal").hover(addHoverPrincipal, removeHoverPrincipal);
+        }, tempsAnimation+50);
         //inMouvement = true;
     }
 
-    $(".divMarkedHoverPrincipal").hover(function (e) {
-        if($(this).attr("id") == "div1")
+    $(".divMarkedHoverPrincipal").hover(addHoverPrincipal, removeHoverPrincipal);
+
+    function addHoverPrincipal(e)
+    {
+        if($(this).attr("id") == "div1" && !inMouvement)
         {
             var $newConteneur = $('<span class="spanHover"></span>');
             var $newDiv = $('<div id="hoverBackgroundId" class="backgroundHover"></div>');
@@ -83,22 +90,31 @@ $(document).ready(function(){
             $newConteneur.show("slow");
             //$(this).children().append($newSpan);
         }
-    }, function(e){
-        if($(this).attr("id") == "div1")
+    }
+    
+    function removeHoverPrincipal(e)
+    {
+        if($(this).attr("id") == "div1"  && !inMouvement)
         {
             $div = $(this);
             $('.spanHover').hide("slow", function(){
                 $div.children().empty();
             });
         }
-    });
+    }
 
     $("#div1").click(function (e) {
         if($(e.target).is('.boutonReplayHover'))
         {
-            // On réactive l'animation directement et on lui met un intervalle
-            console.log("On a clique sur le bouton");
-            initInterval();
+            $div = $(this);
+            $div.removeClass("divMarkedHoverPrincipal");
+            $div.unbind('mouseenter mouseleave');
+
+            $('.spanHover').hide("slow", function(){
+                $div.children().empty();
+                // On réactive l'animation directement et on lui met un intervalle
+                initInterval();
+            });
         }
 
     });
@@ -132,7 +148,6 @@ $(document).ready(function(){
     function stopAnimate(){
         if (!inMouvement) {
             // On désactive le css hover
-            $("#div1").addClass("divMarkedHoverPrincipal");
             for(var i = 2; i <= nbImages; i++)
             {
                 $("#div"+i).each(function (index) {
