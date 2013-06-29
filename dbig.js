@@ -1,7 +1,7 @@
 /*
-TODO: Supprimer la dernière colonne
+TODO: OK Supprimer la dernière colonne
 TODO: BIG => Gerer les autres supports
-TODO: Gérer les bugs de redimensionnement (voir avec les events sur document)
+TODO: Gérer les bugs de red imensionnement (voir avec les events sur document)
 TODO: Redémarrer tout de suite l'animation après clic sur la croix
 TODO: Ne montrer que la fleche du switch de la barre latéral quand on clique dessus => réduire la width de la iframe
 TODO: Faire fonctionner sur ipad
@@ -55,7 +55,8 @@ $(document).ready(function(){
         intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
     }
 
-    $(".redim").click(imageClicked);
+    $(document).on('click', '.redim', imageClicked)
+    //$(".redim").click(imageClicked);
 
     function imageClicked(e)
     {
@@ -266,7 +267,7 @@ $(document).ready(function(){
             $newDiv.css("display", "");
 
             // On rattache l'eventhandler
-            $newDiv.click(imageClicked);
+            //$newDiv.click(imageClicked);
 
             inMouvement = false;
         });

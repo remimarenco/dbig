@@ -11,21 +11,14 @@ $(document).ready(function(){
             setTimeout(resizeend, delta);
         }
 
-        $(".animationEnCours").each(
-            function (index) {
-                $(this).stop(true, true);
-            });
-
-        inMouvement = true;
+        resizing();
     });
 
     function resizeend() {
         if (new Date() - rtime < delta) {
             setTimeout(resizeend, delta);
         } else {
-            inMouvement = false;
-            timeout = false;
-            console.log("Toto!");                
+            stopResizing(timeout);                
         }
     }
 });
