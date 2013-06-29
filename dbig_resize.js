@@ -1,13 +1,13 @@
 $(document).ready(function(){
     // On pose la fonction de détection de resize
     var rtime = new Date(1, 1, 2000, 12, 00, 00);
-    var timeout = false;
-    var delta = 2000;
+    dbig_timeout = false;
+    var delta = 1000;
     
     $(window).resize(function () {
         rtime = new Date();
-        if (timeout === false) {
-            timeout = true;
+        if (dbig_timeout === false) {
+            dbig_timeout = true;
             setTimeout(resizeend, delta);
         }
 
@@ -18,7 +18,7 @@ $(document).ready(function(){
         if (new Date() - rtime < delta) {
             setTimeout(resizeend, delta);
         } else {
-            stopResizing(timeout);                
+            stopResizing();                
         }
     }
 });

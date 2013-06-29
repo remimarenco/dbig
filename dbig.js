@@ -2,7 +2,7 @@
 TODO: OK Supprimer la dernière colonne
 TODO: BIG => Gerer les autres supports
 TODO: Gérer les bugs de red imensionnement (voir avec les events sur document)
-TODO: Redémarrer tout de suite l'animation après clic sur la croix
+TODO: OK Redémarrer tout de suite l'animation après clic sur la croix
 TODO: Ne montrer que la fleche du switch de la barre latéral quand on clique dessus => réduire la width de la iframe
 TODO: Faire fonctionner sur ipad
  */
@@ -46,9 +46,10 @@ $(document).ready(function(){
 
     // On lance tout de suite la fonction pour un premier mouvement
     setTimeout(function () { randomMoving() }, tempsPremiereAnimation);
-
+    initInterval();
     // var tempsTotalDebut = tempsPremiereAnimation + tempsAnimation;
     // setTimeout(function () { initInterval() }, tempsTotalDebut);
+
 
     function initInterval() {
         // On lance ensuite le timer
@@ -76,6 +77,9 @@ $(document).ready(function(){
                 stopAnimate(); 
                 $("#div1").addClass("divMarkedHoverPrincipal");
             }, tempsAnimation+50);
+
+            // On active le mode détail
+            inDetailedMode();
         }
         
         //inMouvement = true;
@@ -116,13 +120,18 @@ $(document).ready(function(){
     function replay(e){
         if($(e.target).is('.boutonReplayHover'))
         {
+            // On active le mode présentation
+            inPresentationMode();
+
             $div = $(this);
             $div.removeClass("divMarkedHoverPrincipal");
             //$div.unbind('mouseenter mouseleave');
 
             $div.children().empty();
-            // On réactive l'animation directement
+            // On réactive l'animation directement et son compteur
             randomMoving();
+
+
         }
     }
 
@@ -193,12 +202,12 @@ $(document).ready(function(){
     }
 
     function randomMoving(){
-        if (inMouvement || inResize) {
+        if (inMouvement || inResize || inDetail) {
             return false;
         }
         else {
             clearInterval(intervalPowa);
-            intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
+            initInterval();
             inMouvement = true;
         }
 
