@@ -89,7 +89,7 @@ $(document).ready(function(){
 
     function addHoverPrincipal(e)
     {
-        if($(this).attr("id") == "div1" && !inMouvement && !inResize)
+        if($(this).attr("id") == "div1" && !inMouvement)
         {
             var $newConteneur = $('<span class="spanHover"></span>');
             var $newDiv = $('<div id="hoverBackgroundId" class="backgroundHover"></div>');
