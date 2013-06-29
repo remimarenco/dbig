@@ -1,10 +1,10 @@
 /*
-TODO: Supprimer la dernière colonne => On oublie
-TODO: Modifier la resolution des images pour voir le resultat
-TODO: Regler le probleme de l'animation qui reprend apres un resize
+TODO: Supprimer la dernière colonne
 TODO: BIG => Gerer les autres supports
-TODO: Remettre le hover sur les autres images
-TODO: Supprimer les hover en deplacement
+TODO: Gérer les bugs de redimensionnement (voir avec les events sur document)
+TODO: Redémarrer tout de suite l'animation après clic sur la croix
+TODO: Ne montrer que la fleche du switch de la barre latéral quand on clique dessus => réduire la width de la iframe
+TODO: Faire fonctionner sur ipad
  */
 
 $(document).ready(function(){

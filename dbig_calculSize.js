@@ -11,7 +11,7 @@ function calculSize() {
     }
     */
    
-    _nbImages = 18;
+    _nbImages = 9;
 
     return _nbImages;
 }
