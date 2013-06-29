@@ -5,7 +5,7 @@ function resizing(){
                 $(this).stop(true, true);
             });
 
-    inMouvement = true;
+    //inMouvement = true;
     inResize = true;
 }
 

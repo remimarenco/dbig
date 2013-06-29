@@ -55,26 +55,37 @@ $(document).ready(function(){
         intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
     }
 
+    $(document).on('click', '#div1', replay);
     $(document).on('click', '.redim', imageClicked)
+    $(document).on({
+        mouseenter: addHoverPrincipal,
+        mouseleave: removeHoverPrincipal
+        }
+        , '.divMarkedHoverPrincipal'
+    );
     //$(".redim").click(imageClicked);
 
     function imageClicked(e)
     {
         //intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
-        movingClicked(this);
-        setTimeout(function () { 
-            stopAnimate(); 
-            $("#div1").addClass("divMarkedHoverPrincipal");
-            $(".divMarkedHoverPrincipal").hover(addHoverPrincipal, removeHoverPrincipal);
-        }, tempsAnimation+50);
+        // Si on a cliqué sur l'image principale, alors on ignore
+        if(!$(e.target).parents('#div1').length)
+        {
+            movingClicked(this);
+            setTimeout(function () { 
+                stopAnimate(); 
+                $("#div1").addClass("divMarkedHoverPrincipal");
+            }, tempsAnimation+50);
+        }
+        
         //inMouvement = true;
     }
 
-    $(".divMarkedHoverPrincipal").hover(addHoverPrincipal, removeHoverPrincipal);
+    //$(".divMarkedHoverPrincipal").hover(addHoverPrincipal, removeHoverPrincipal);
 
     function addHoverPrincipal(e)
     {
-        if($(this).attr("id") == "div1" && !inMouvement)
+        if($(this).attr("id") == "div1" && !inMouvement && !inResize)
         {
             var $newConteneur = $('<span class="spanHover"></span>');
             var $newDiv = $('<div id="hoverBackgroundId" class="backgroundHover"></div>');
@@ -95,30 +106,25 @@ $(document).ready(function(){
     
     function removeHoverPrincipal(e)
     {
-        if($(this).attr("id") == "div1"  && !inMouvement)
+        if($(this).attr("id") == "div1")
         {
             $div = $(this);
-            $('.spanHover').hide("slow", function(){
-                $div.children().empty();
-            });
+            $div.children().empty();
         }
     }
 
-    $("#div1").click(function (e) {
+    function replay(e){
         if($(e.target).is('.boutonReplayHover'))
         {
             $div = $(this);
             $div.removeClass("divMarkedHoverPrincipal");
-            $div.unbind('mouseenter mouseleave');
+            //$div.unbind('mouseenter mouseleave');
 
-            $('.spanHover').hide("slow", function(){
-                $div.children().empty();
-                // On réactive l'animation directement et on lui met un intervalle
-                initInterval();
-            });
+            $div.children().empty();
+            // On réactive l'animation directement
+            randomMoving();
         }
-
-    });
+    }
 
     function addContenuHover($newDiv)
     {
@@ -147,7 +153,7 @@ $(document).ready(function(){
     }
 
     function stopAnimate(){
-        if (!inMouvement) {
+        if (!inMouvement || !inResize) {
             // On désactive le css hover
             for(var i = 2; i <= nbImages; i++)
             {
@@ -187,7 +193,7 @@ $(document).ready(function(){
     }
 
     function randomMoving(){
-        if (inMouvement) {
+        if (inMouvement || inResize) {
             return false;
         }
         else {
