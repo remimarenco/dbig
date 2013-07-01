@@ -1,31 +1,49 @@
 /*
-TODO: OK Supprimer la dernière colonne
 TODO: BIG => Gerer les autres supports
-TODO: Gérer les bugs de red imensionnement (voir avec les events sur document)
-TODO: OK Redémarrer tout de suite l'animation après clic sur la croix
 TODO: Ne montrer que la fleche du switch de la barre latéral quand on clique dessus => réduire la width de la iframe
 TODO: Faire fonctionner sur ipad
  */
 
 $(document).ready(function(){
-    // Fonction de vérification de la longueur du tableau
+    // Fonction de vérification de l'existence d'un objet js en regardant si sa longueur est > 0
     jQuery.fn.exists = function () { return this.length > 0; };
 
+    // Tableau contenant toutes les images qui vont défilées
     var tableauImages = new Array();
-    var tableauImagesCourantes = new Array();
 
-    // On charge d'abord les images dans les cases, en fonction de la taille
+    // On calcule le nb d'images selon la taille du browser
     var nbImages = calculSize();
 
+    // L'image d'après correspond au nombre d'images (tableauImages[0->nbImages-1])
     var indexImageSuivante = nbImages;
 
+    /*
+    * Section de manipulation des temps de transitions
+    */
+    // Temps qui s'écoule entre le lancement du mouvement complet et le suivant
     var tempsRandom = 4000;
+    // Temps que prend un mouvement complet
     var tempsAnimation = 2000;
+
+    // Temps que met la première animation à se déclencher
     var tempsPremiereAnimation = 2000;
 
+    // On récupère le temps total pour lequel nous devons lancer le cycle d'animation
+    var tempsTotalDebut = tempsPremiereAnimation + tempsAnimation;
+
+    // Temps pour lequel on vérifie qu'une animation est en cours
     var verifAnimation = 200;
 
-    var intervalPowa;
+    /*
+    * Fin de section de transition des manipulation de transitions
+    */
+
+    // Intervalle permettant de relancer la fonction de mouvement random 
+    var intervalMouvement;
+
+    /*
+    * Fin du setup des variables
+    */
 
     // On récupère toutes les images qui sont dans divStockage
     if ($("#divStockage").exists()) {
@@ -34,26 +52,24 @@ $(document).ready(function(){
         });
     }
 
-    // On charge les images dans le Html
+    // On charge nbImages en tant qu'images de fond des div dans le html
     for (var i = 1; i <= nbImages; i++) {
         if ($("#divRedim" + i).exists()) {
             var $jImg = $(tableauImages[i - 1]);
             
             $('#divRedim'+i).css("background-image", "url("+$jImg.attr("src")+")");
         }
-        //indexImageSuivante = i;
     }
 
-    // On lance tout de suite la fonction pour un premier mouvement
+    // On lance la fonction pour un premier mouvement
     setTimeout(function () { randomMoving() }, tempsPremiereAnimation);
-    initInterval();
-    // var tempsTotalDebut = tempsPremiereAnimation + tempsAnimation;
-    // setTimeout(function () { initInterval() }, tempsTotalDebut);
+
+    setTimeout(function () { initInterval() }, tempsTotalDebut);
 
 
     function initInterval() {
         // On lance ensuite le timer
-        intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
+        intervalMouvement = setInterval(function () { randomMoving() }, tempsRandom);
     }
 
     $(document).on('click', '#div1', replay);
@@ -68,7 +84,7 @@ $(document).ready(function(){
 
     function imageClicked(e)
     {
-        //intervalPowa = setInterval(function () { randomMoving() }, tempsRandom);
+        //intervalMouvement = setInterval(function () { randomMoving() }, tempsRandom);
         // Si on a cliqué sur l'image principale, alors on ignore
         if(!$(e.target).parents('#div1').length)
         {
@@ -184,8 +200,8 @@ $(document).ready(function(){
         }
         else {
             // On arrete l'animation
-            clearInterval(intervalPowa);
-            intervalPowa = null;
+            clearInterval(intervalMouvement);
+            intervalMouvement = null;
             inMouvement = true;
         }
 
@@ -206,7 +222,7 @@ $(document).ready(function(){
             return false;
         }
         else {
-            clearInterval(intervalPowa);
+            clearInterval(intervalMouvement);
             initInterval();
             inMouvement = true;
         }
