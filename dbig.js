@@ -37,9 +37,9 @@ $(document).ready(function(){
     // On charge les images dans le Html
     for (var i = 1; i <= nbImages; i++) {
         if ($("#divRedim" + i).exists()) {
-            jImg = $(tableauImages[i - 1]);
-
-            $('#divRedim'+i).css("background-image", "url("+jImg.attr("src")+")");
+            var $jImg = $(tableauImages[i - 1]);
+            
+            $('#divRedim'+i).css("background-image", "url("+$jImg.attr("src")+")");
         }
         //indexImageSuivante = i;
     }
@@ -113,7 +113,9 @@ $(document).ready(function(){
         if($(this).attr("id") == "div1")
         {
             $div = $(this);
-            $div.children().empty();
+            $('.spanHover').hide("fast", function(){
+                $div.children().empty();
+            });
         }
     }
 
@@ -130,8 +132,6 @@ $(document).ready(function(){
             $div.children().empty();
             // On réactive l'animation directement et son compteur
             randomMoving();
-
-
         }
     }
 
