@@ -4,6 +4,19 @@ TODO: Ne montrer que la fleche du switch de la barre latéral quand on clique de
 TODO: Faire fonctionner sur ipad
  */
 
+/* 
+*ATTENTION: Plusieurs variables doivent être initialisés dans l'environnement global afin que tous les js puissent y accéder :
+*   // inMouvement permet de savoir si une animation est en cours ou non
+*   var inMouvement = false;
+*   // inDetail permet de savoir si on est en mode détail (une image a été cliquée) ou non
+*   var inDetail = false;
+*   // inPresentation permet de savoir si on est en mode automatique/random de mouvement des images
+*   var inPresentation = true;
+*   // inResize permet de savoir si on est en train de redimensionner la fenêtre ou non
+*   var inResize = false;
+*   // dbig_timeout permet de savoir si le temps de fin de resize à été atteint ou si nous devons encore attendre    
+*   var dbig_timeout = false;
+*/
 $(document).ready(function(){
     // Fonction de vérification de l'existence d'un objet js en regardant si sa longueur est > 0
     jQuery.fn.exists = function () { return this.length > 0; };
@@ -64,31 +77,41 @@ $(document).ready(function(){
     // On lance la fonction pour un premier mouvement
     setTimeout(function () { randomMoving() }, tempsPremiereAnimation);
 
+    // On lance l'initialisation de l'intervalle en calculant le temps de lancement de la premiere animation + sa durée
     setTimeout(function () { initInterval() }, tempsTotalDebut);
 
-
+    // Fonction permettant d'initialiser l'intervalle de lancement de l'animation
     function initInterval() {
-        // On lance ensuite le timer
         intervalMouvement = setInterval(function () { randomMoving() }, tempsRandom);
     }
 
+    /*
+    * Section d'abonnements aux évènements récurrents
+    */
+
+    // Abonnement au click sur l'image principale pour lancer le replay
     $(document).on('click', '#div1', replay);
+    // Abonnement aux clicks sur les div bougeantes
     $(document).on('click', '.redim', imageClicked)
+    // Abonnement au hover entrant et sortant pour l'image principale marqué en css .divMarkedHoverPrincipal
     $(document).on({
         mouseenter: addHoverPrincipal,
         mouseleave: removeHoverPrincipal
         }
         , '.divMarkedHoverPrincipal'
     );
-    //$(".redim").click(imageClicked);
 
+    // Fonction permettant de lancer le mouvement inDetail depuis l'objet cliqué
     function imageClicked(e)
     {
-        //intervalMouvement = setInterval(function () { randomMoving() }, tempsRandom);
-        // Si on a cliqué sur l'image principale, alors on ignore
+        // Si on a cliqué dans l'image principale, alors on ignore
         if(!$(e.target).parents('#div1').length)
         {
+            // On appelle une fonction pour effectuer le mouvement global jusqu'à l'image cliquée
             movingClicked(this);
+
+            //TODO: Trouver une autre moyen que de placer cette fonction ici => Problème d'effets de bord
+            // Permet de remettre la marque css pour gestion du hover sur l'image principale après que le mouvement ait été effectué
             setTimeout(function () { 
                 stopAnimate(); 
                 $("#div1").addClass("divMarkedHoverPrincipal");
@@ -96,31 +119,37 @@ $(document).ready(function(){
 
             // On active le mode détail
             inDetailedMode();
-        }
-        
-        //inMouvement = true;
+        }        
     }
 
-    //$(".divMarkedHoverPrincipal").hover(addHoverPrincipal, removeHoverPrincipal);
-
+    // Fonction permettant de faire apparaitre le texte de l'image reliée
+    // TODO: Récupérer le texte de l'image depuis l'image chargée dans le tableau
     function addHoverPrincipal(e)
     {
+        // On n'exécute ceci que sur la div principale et si elle n'est pas en mouvement
         if($(this).attr("id") == "div1" && !inMouvement)
         {
+            // Création du span parent de la description de l'image
             var $newConteneur = $('<span class="spanHover"></span>');
+            // Création de la div permettant de faire l'effet de couleur semi-opaque
             var $newDiv = $('<div id="hoverBackgroundId" class="backgroundHover"></div>');
-            // On met la taille offset de la div que l'on hover
 
+            // Création de la span contenant le texte de l'image
             var $newSpan = $('<span class="spanContenuHover"></span>');
+            
+            // On ajoute les informations de l'image dans le span
             addContenuHover($newSpan);
 
+            // On ajoute au conteneur parent la div d'opacité
             $newConteneur.append($newDiv);
+            // On ajoute au conteneur parent le texte de l'image
             $newConteneur.append($newSpan);
 
+            // On ajoute à l'élement qui a recu l'évènement ce conteneur
             $(this).children().append($newConteneur);
 
+            // On met un effet lent d'apparition sur le span parent nouvellement créé
             $newConteneur.show("slow");
-            //$(this).children().append($newSpan);
         }
     }
     
