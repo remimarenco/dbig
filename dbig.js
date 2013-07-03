@@ -1,7 +1,11 @@
 /*
-TODO: BIG => Gerer les autres supports
+TODO: BIG => Gerer les autres supports, iPad / (iPhone)
 TODO: Ne montrer que la fleche du switch de la barre latéral quand on clique dessus => réduire la width de la iframe
-TODO: Faire fonctionner sur ipad
+TODO: Barre latérale => La redimensionner en fonction de la taille de l'écran
+TODO: Identifier l'origine du problème d'écran noir sur iPad
+    Installer xampp
+    Lancer dbig sur xampp
+TODO: Réparer les problèmes sur l'intégration Google Maps
  */
 
 /* 
@@ -18,6 +22,9 @@ TODO: Faire fonctionner sur ipad
 *   var dbig_timeout = false;
 */
 $(document).ready(function(){
+    // Première fonction qui va attendre le chargement de toutes les images dans le HTML
+    //$(".divGallerie").queryLoader2();
+
     // Fonction de vérification de l'existence d'un objet js en regardant si sa longueur est > 0
     jQuery.fn.exists = function () { return this.length > 0; };
 
@@ -153,18 +160,26 @@ $(document).ready(function(){
         }
     }
     
+    // Fonction permettant de supprimer les explications sur l'image principale en mode détail
     function removeHoverPrincipal(e)
     {
+        // On n'applique cet effet seulement sur la div principale
         if($(this).attr("id") == "div1")
         {
+            // On récupère la div cliquée
             $div = $(this);
+            // On cache la span contenant le texte et l'opacité, à la fin de cette animation, on supprime les enfants
+            // TODO: Attention à l'effet de bord, ne supprimer que .spanHover
             $('.spanHover').hide("fast", function(){
                 $div.children().empty();
             });
         }
     }
 
-    function replay(e){
+    // Fonction permettant de repasser du mode détail au mode présentation
+    function replay(e)
+    {
+        // On  
         if($(e.target).is('.boutonReplayHover'))
         {
             // On active le mode présentation
