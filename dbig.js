@@ -388,7 +388,7 @@ $(document).ready(function(){
         var i = fromInt;
         var iNext = 0;
 
-        while ($("#div" + i).exists() && $("#div" + i).attr("id") != $toElement.parent().attr("id")) {
+        while ($("#div" + i).exists() && $("#div" + (i+1)).exists() && $("#div" + i).attr("id") != $toElement.parent().attr("id")) {
             iNext = i + 1;
             //console.log("On bouge l'enfant " + $("#div" + i).attr("id") + " vers " + $("#div" + iNext).attr("id"));
             moveToEffect($("#div" + i), $("#div" + iNext));
