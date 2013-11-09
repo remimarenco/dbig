@@ -15,7 +15,6 @@ function stopResizing(){
 	inMouvement = false;
     dbig_timeout = false;
     inResize = false;
-    console.log('toto');
 }
 
 // Permet de modifier le code lorsque l'on passe en mode présentation

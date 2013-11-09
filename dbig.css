@@ -11,12 +11,13 @@ html, body
 
 #divTop
 {
-    height: 66%;
+    height: 66.6666666%;
 }
 
 #divDown
 {
-    height: 34%;
+    height: 33.3333333%;
+    margin
 }
 
 .divQuart
@@ -104,11 +105,11 @@ font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", He
     background-image: url(images/1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
 }
 
 .divGallerie{
-    width:83%;
-    float: right;
+    width:100%;
 }
 
 .pitchMenu
@@ -122,51 +123,51 @@ font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", He
 @media only screen and (max-width: 1920px) 
 {
 
-   .titleHover{
-    font-size: 40px; 
-}
+    .titleHover{
+        font-size: 40px; 
+    }
     .textInfosHover{
-    font-size: 18px; 
-}
+        font-size: 18px; 
+    }
 }
 
 @media only screen and (max-width: 1280px) 
 {
-   .titleHover{
-    font-size: 30px;
-}
- .textInfosHover{
-    font-size: 13px; 
-}
+    .titleHover{
+        font-size: 30px;
+    }
+    .textInfosHover{
+        font-size: 13px; 
+    }
 }
 
 @media only screen and (max-width: 900px) 
 {
-   .titleHover{
-    font-size: 20px;
-}
- .textInfosHover{
-    font-size: 9px; 
-}
+    .titleHover{
+        font-size: 20px;
+    }
+    .textInfosHover{
+        font-size: 9px; 
+    }
 }
 
 @media only screen and (max-width: 500px) 
 {
    .titleHover{
-    font-size: 15px;
-}
- .textInfosHover{
-    font-size: 7px; 
-}
+        font-size: 15px;
+    }
+    .textInfosHover{
+        font-size: 7px; 
+    }
 }
 
 @media only screen and (max-height: 400px) 
 {
    .titleHover{
-    bottom: 10%;
-}
- .textInfosHover{
-    display: none;
-}
+        bottom: 10%;
+    }
+    .textInfosHover{
+        display: none;
+    }
 }
 
